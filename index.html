@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>令和エステート株式会社 | 宮城県の不動産</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      color: #333;
+      line-height: 1.8;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 66px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      z-index: 1000;
+    }
+
+    .hd-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    /* ロゴ：自然な高さで表示（305×46px → 高さ46px相当） */
+    .hd-logo img {
+      height: 46px;
+      width: auto;
+      display: block;
+    }
+
+    /* ハンバーガーボタン（SP用） */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 26px;
+      height: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1100;
+    }
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #333;
+      border-radius: 1px;
+      transition: all 0.3s;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    nav a {
+      font-size: 14px;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    nav a:hover { color: #4d8c3a; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      margin-top: 66px;
+      height: 400px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 60% 65%;
+      display: block;
+    }
+
+    .hero-box {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      background: #4d8c3a;
+      color: #fff;
+      padding: 38px 50px;
+      width: 38%;
+    }
+
+    .hero-box h1 {
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.8;
+    }
+
+    /* ─── 開発行為なら令和エステート ─── */
+    #kaihatsu {
+      padding: 80px 30px 70px;
+      background: #fff;
+      text-align: center;
+    }
+
+    #kaihatsu .sec-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #2d5a2d;
+    }
+
+    #kaihatsu .sec-sub {
+      font-size: 13px;
+      color: #555;
+      margin-top: 14px;
+    }
+
+    #kaihatsu hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      max-width: 860px;
+      margin: 24px auto;
+    }
+
+    #kaihatsu .sec-body {
+      font-size: 13px;
+      color: #555;
+      line-height: 2.5;
+    }
+
+    /* ─── 開発実績 ─── */
+    #jisseki {
+      padding: 70px 0 80px;
+      background: #fff;
+      text-align: center;
+    }
+
+    #jisseki .sec-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #2d5a2d;
+      margin-bottom: 40px;
+      padding: 0 30px;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      width: 100%;
+      margin-bottom: 36px;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .jisseki-list {
+      list-style: none;
+      display: inline-block;
+      text-align: left;
+      font-size: 13px;
+      color: #333;
+      line-height: 2.2;
+    }
+
+    .jisseki-list li { display: flex; }
+
+    .jisseki-list .loc  { display: inline-block; width: 200px; }
+    .jisseki-list .kukaku { display: inline-block; width: 72px; text-align: right; }
+    .jisseki-list .area { display: inline-block; width: 100px; text-align: right; }
+
+    /* ─── 会社概要 バナー ─── */
+    #company {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #company img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #company::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.52);
+    }
+
+    #company h2 {
+      position: relative;
+      z-index: 1;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.15em;
+    }
+
+    /* ─── ご挨拶 ─── */
+    #greeting {
+      padding: 80px 30px 70px;
+      background: #fff;
+      text-align: center;
+    }
+
+    #greeting .sec-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2d5a2d;
+      margin-bottom: 36px;
+    }
+
+    .greeting-text {
+      font-size: 13px;
+      color: #555;
+      line-height: 2.5;
+    }
+
+    .greeting-sign {
+      margin-top: 28px;
+      font-size: 13px;
+      color: #333;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: right;
+    }
+
+    /* ─── 会社概要 テーブル ─── */
+    #company-info {
+      padding: 70px 30px 80px;
+      background: #fff;
+      text-align: center;
+    }
+
+    #company-info .sec-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2d5a2d;
+      margin-bottom: 40px;
+    }
+
+    .company-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 60px;
+      text-align: left;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .company-dl dt {
+      font-size: 11px;
+      color: #888;
+      padding: 10px 0 3px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .company-dl dd {
+      font-size: 13px;
+      color: #333;
+      padding: 5px 0 12px;
+      border-bottom: 1px solid #e8e8e8;
+      line-height: 1.7;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      padding: 36px 30px;
+    }
+
+    .ft-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    /* フッターロゴ */
+    .ft-logo img {
+      height: 46px;
+      width: auto;
+      display: block;
+    }
+
+    /* ハトマーク */
+    .ft-badge img {
+      height: 130px;
+      width: auto;
+      display: block;
+    }
+
+    /* ─── SP：モバイル対応 ─── */
+    @media (max-width: 768px) {
+
+      /* ヘッダー */
+      header { height: 56px; }
+      .hd-inner { padding: 0 16px; }
+      .hd-logo img { height: 38px; }
+      .hamburger { display: flex; }
+
+      nav {
+        display: none;
+        position: fixed;
+        top: 56px; left: 0; right: 0;
+        background: #fff;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 0 16px;
+        border-top: 1px solid #eee;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        z-index: 999;
+      }
+      nav.open { display: flex; }
+      nav a {
+        width: 100%;
+        padding: 12px 24px;
+        font-size: 15px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      /* ヒーロー */
+      .hero { margin-top: 56px; height: 260px; }
+      .hero-box { width: 72%; padding: 22px 24px; }
+      .hero-box h1 { font-size: 16px; line-height: 1.75; }
+
+      /* 開発行為 */
+      #kaihatsu { padding: 48px 20px 40px; }
+      #kaihatsu .sec-title { font-size: 20px; }
+      #kaihatsu .sec-body { font-size: 13px; line-height: 2.2; }
+      #kaihatsu .sec-body br { display: none; }
+
+      /* 開発実績 */
+      #jisseki { padding: 48px 0 56px; }
+      #jisseki .sec-title { font-size: 20px; margin-bottom: 28px; }
+      .photo-grid { grid-template-columns: 1fr; gap: 3px; }
+      .photo-grid img { height: 200px; }
+      .jisseki-list { padding: 0 20px; width: 100%; }
+      .jisseki-list .loc { width: 150px; }
+      .jisseki-list .kukaku { width: 56px; }
+      .jisseki-list .area { width: 80px; }
+      .jisseki-list { font-size: 12px; }
+
+      /* 会社概要バナー */
+      #company { height: 140px; }
+      #company h2 { font-size: 22px; }
+
+      /* ご挨拶 */
+      #greeting { padding: 48px 20px 40px; }
+      #greeting .sec-title { font-size: 18px; }
+      .greeting-text br { display: none; }
+      .greeting-sign { text-align: center; }
+
+      /* 会社概要テーブル */
+      #company-info { padding: 40px 20px 56px; }
+      #company-info .sec-title { font-size: 18px; }
+      .company-grid { grid-template-columns: 1fr; gap: 0; }
+
+      /* フッター */
+      footer { padding: 28px 20px; }
+      .ft-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+      .ft-logo img { height: 38px; }
+      .ft-badge img { height: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── HEADER ─── -->
+  <header>
+    <div class="hd-inner">
+      <a href="index.html" class="hd-logo">
+        <img src="img/logo.png" alt="令和エステート株式会社">
+      </a>
+      <button class="hamburger" id="ham" aria-label="メニューを開く" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="nav">
+        <a href="#kaihatsu">開発行為</a>
+        <a href="#company">会社概要</a>
+        <a href="#">販売物件</a>
+        <a href="contact.html">問い合わせ</a>
+        <a href="index.html">HOME</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ─── HERO ─── -->
+  <div class="hero">
+    <img class="hero-bg" src="img/hero.webp" alt="令和エステート">
+    <div class="hero-box">
+      <h1>不動産売却・購入・買取<br>お気軽にご相談ください</h1>
+    </div>
+  </div>
+
+  <!-- ─── 開発行為なら令和エステート ─── -->
+  <section id="kaihatsu">
+    <h2 class="sec-title">開発行為なら令和エステート</h2>
+    <p class="sec-sub">大型宅地分譲から1区画まで豊富な実績でサポート</p>
+    <hr>
+    <p class="sec-body">
+      宮城県を中心とした手を加えないと建築できない土地の買い取りはお任せ下さい。<br>
+      開発行為が必要な広い土地からコンパクトな土地まで買取査定をお引受けいたします。<br>
+      同業者の皆さまからのご相談も歓迎します。
+    </p>
+  </section>
+
+  <!-- ─── 開発実績 ─── -->
+  <section id="jisseki">
+    <h2 class="sec-title">開発実績</h2>
+    <div class="photo-grid">
+      <img src="img/dev1.webp" alt="開発実績1">
+      <img src="img/dev2.webp" alt="開発実績2">
+      <img src="img/dev3.webp" alt="開発実績3">
+    </div>
+    <ul class="jisseki-list">
+      <li><span class="loc">&lt;名取市増田7丁目&gt;</span><span class="kukaku">23 区画</span><span class="area">5741.09 ㎡</span></li>
+      <li><span class="loc">&lt;登米市南方町&gt;</span><span class="kukaku">15 区画</span><span class="area">3443.00 ㎡</span></li>
+      <li><span class="loc">&lt;大河原町金ケ瀬&gt;</span><span class="kukaku">12 区画</span><span class="area">2968.21 ㎡</span></li>
+      <li><span class="loc">&lt;福島県相馬市&gt;</span><span class="kukaku">11 区画</span><span class="area">2159.27 ㎡</span></li>
+      <li><span class="loc">&lt;多賀城市浮島&gt;</span><span class="kukaku">8 区画</span><span class="area">1902.95 ㎡</span></li>
+    </ul>
+  </section>
+
+  <!-- ─── 会社概要 バナー ─── -->
+  <div id="company">
+    <img src="img/company_bg.webp" alt="会社概要">
+    <h2>会社概要</h2>
+  </div>
+
+  <!-- ─── ご挨拶 ─── -->
+  <section id="greeting">
+    <h2 class="sec-title">ご挨拶</h2>
+    <p class="greeting-text">
+      令和エステートはみなさまの不動産パートナーとして、親身なサービスを心がけております。<br>
+      不動産のどんなお悩みも、柔軟に、臨機応変に対応します。<br>
+      他店で上手く行かなかった案件もまずはご相談下さい。<br>
+      当店が目指すのは売り手も買い手も笑顔になれるご提案です。<br>
+      不動産業を通じて宮城の街に笑顔が増えるよう、サービスの向上に日々邁進します。
+    </p>
+    <p class="greeting-sign">代表取締役 阿部 勉</p>
+  </section>
+
+  <!-- ─── 会社概要 テーブル ─── -->
+  <section id="company-info">
+    <h2 class="sec-title">会社概要</h2>
+    <div class="company-grid">
+      <dl class="company-dl">
+        <dt>会社名</dt>
+        <dd>令和エステート株式会社</dd>
+        <dt>住所</dt>
+        <dd>名取市大手町五丁目12-2 Re:Casa大手町1F</dd>
+        <dt>TEL</dt>
+        <dd>022-797-4890</dd>
+        <dt>FAX</dt>
+        <dd>022-797-4891</dd>
+        <dt>代表者</dt>
+        <dd>阿部 勉</dd>
+        <dt>創業</dt>
+        <dd>令和元年6月27日</dd>
+        <dt>設立</dt>
+        <dd>令和元年6月27日</dd>
+        <dt>資本金</dt>
+        <dd>300 万円</dd>
+        <dt>従業員数</dt>
+        <dd>2 名</dd>
+      </dl>
+      <dl class="company-dl">
+        <dt>取引銀行</dt>
+        <dd>東邦銀行、七十七銀行、岩手銀行、仙台銀行、常陽銀行、商工信用金庫、きらやか銀行、山形銀行、北日本銀行、杜の都信用金庫、宮城第一信用金庫</dd>
+        <dt>取引先</dt>
+        <dd>飯田ホールディングス、ツルハホールディングス、その他ハウスメーカー</dd>
+        <dt>協力会社</dt>
+        <dd>株式会社アベ設備工業、優波建設株式会社</dd>
+        <dt>営業種目</dt>
+        <dd>不動産業</dd>
+        <dt>許可番号</dt>
+        <dd>宮城県知事（2）第6579号</dd>
+        <dt>技術者免許等</dt>
+        <dd>宅地建物取引士、2級ファイナンシャル・プランニング技術士、管理業務主任者</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="ft-inner">
+      <a href="index.html" class="ft-logo">
+        <img src="img/logo.png" alt="令和エステート株式会社">
+      </a>
+      <div class="ft-badge">
+        <img src="img/real-partner.png" alt="REAL PARTNER ハトマーク">
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const ham = document.getElementById('ham');
+    const nav = document.getElementById('nav');
+    ham.addEventListener('click', function () {
+      const open = nav.classList.toggle('open');
+      ham.setAttribute('aria-expanded', open);
+    });
+    nav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        nav.classList.remove('open');
+        ham.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ｜令和エステート株式会社</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      color: #333;
+      line-height: 1.8;
+      background: #fff;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── HEADER（index.html と共通） ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 66px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      z-index: 1000;
+    }
+
+    .hd-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    .hd-logo img {
+      height: 46px;
+      width: auto;
+      display: block;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 26px;
+      height: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1100;
+    }
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #333;
+      border-radius: 1px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    nav a {
+      font-size: 14px;
+      color: #222;
+      white-space: nowrap;
+    }
+
+    nav a:hover { color: #4d8c3a; }
+
+    /* ─── ページバナー ─── */
+    .page-banner {
+      margin-top: 66px;
+      background: #4d8c3a;
+      padding: 52px 30px;
+      text-align: center;
+    }
+
+    .page-banner h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.1em;
+    }
+
+    .page-banner p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 10px;
+    }
+
+    /* ─── フォームエリア ─── */
+    .form-section {
+      padding: 80px 30px 100px;
+      background: #fff;
+    }
+
+    .form-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .form-note {
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin-bottom: 48px;
+      line-height: 2;
+    }
+
+    /* フォーム行 */
+    .form-row {
+      margin-bottom: 28px;
+    }
+
+    .form-row label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #2d5a2d;
+      margin-bottom: 8px;
+    }
+
+    .form-row label .required {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      background: #c0392b;
+      padding: 1px 6px;
+      border-radius: 2px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .form-row label .optional {
+      display: inline-block;
+      font-size: 11px;
+      color: #888;
+      margin-left: 6px;
+    }
+
+    .form-row input[type="text"],
+    .form-row input[type="email"],
+    .form-row input[type="tel"],
+    .form-row textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      color: #333;
+      background: #fafafa;
+      transition: border-color 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .form-row input:focus,
+    .form-row textarea:focus {
+      outline: none;
+      border-color: #4d8c3a;
+      background: #fff;
+    }
+
+    .form-row textarea {
+      height: 180px;
+      resize: vertical;
+    }
+
+    /* 送信ボタン */
+    .form-submit {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .btn-submit {
+      display: inline-block;
+      padding: 16px 64px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      color: #fff;
+      background: #4d8c3a;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #3a7a2a;
+    }
+
+    /* サンクスメッセージ */
+    #thanks {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    #thanks h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #2d5a2d;
+      margin-bottom: 20px;
+    }
+
+    #thanks p {
+      font-size: 14px;
+      color: #555;
+      line-height: 2;
+    }
+
+    #thanks .back-link {
+      display: inline-block;
+      margin-top: 36px;
+      padding: 12px 40px;
+      font-size: 14px;
+      color: #4d8c3a;
+      border: 1px solid #4d8c3a;
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+
+    #thanks .back-link:hover {
+      background: #4d8c3a;
+      color: #fff;
+    }
+
+    /* ─── FOOTER（index.html と共通） ─── */
+    footer {
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      padding: 36px 30px;
+    }
+
+    .ft-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .ft-logo img {
+      height: 46px;
+      width: auto;
+      display: block;
+    }
+
+    .ft-badge img {
+      height: 130px;
+      width: auto;
+      display: block;
+    }
+
+    /* ─── SP：モバイル対応 ─── */
+    @media (max-width: 768px) {
+      header { height: 56px; }
+      .hd-inner { padding: 0 16px; }
+      .hd-logo img { height: 38px; }
+      .hamburger { display: flex; }
+
+      nav {
+        display: none;
+        position: fixed;
+        top: 56px; left: 0; right: 0;
+        background: #fff;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 0 16px;
+        border-top: 1px solid #eee;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        z-index: 999;
+      }
+      nav.open { display: flex; }
+      nav a {
+        width: 100%;
+        padding: 12px 24px;
+        font-size: 15px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .page-banner {
+        margin-top: 56px;
+        padding: 40px 20px;
+      }
+      .page-banner h1 { font-size: 20px; }
+
+      .form-section { padding: 48px 20px 72px; }
+      .btn-submit { padding: 14px 48px; font-size: 14px; }
+
+      footer { padding: 28px 20px; }
+      .ft-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+      .ft-logo img { height: 38px; }
+      .ft-badge img { height: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── HEADER ─── -->
+  <header>
+    <div class="hd-inner">
+      <a href="index.html" class="hd-logo">
+        <img src="img/logo.png" alt="令和エステート株式会社">
+      </a>
+      <button class="hamburger" id="ham" aria-label="メニューを開く" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="nav">
+        <a href="index.html#kaihatsu">開発行為</a>
+        <a href="index.html#company">会社概要</a>
+        <a href="#">販売物件</a>
+        <a href="contact.html">問い合わせ</a>
+        <a href="index.html">HOME</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ─── ページバナー ─── -->
+  <div class="page-banner">
+    <h1>お問い合わせ</h1>
+    <p>お気軽にお問い合わせください。担当者より折り返しご連絡いたします。</p>
+  </div>
+
+  <!-- ─── フォームエリア ─── -->
+  <section class="form-section">
+    <div class="form-inner">
+
+      <p class="form-note">
+        下記フォームに必要事項をご記入のうえ、送信ボタンをクリックしてください。<br>
+        通常2〜3営業日以内にご返信いたします。
+      </p>
+
+      <form id="contact-form" action="https://formspree.io/f/【FormspreeのフォームIDをここに入れる】" method="POST">
+
+        <div class="form-row">
+          <label for="name">
+            お名前<span class="required">必須</span>
+          </label>
+          <input type="text" id="name" name="name" placeholder="例）令和 太郎" required>
+        </div>
+
+        <div class="form-row">
+          <label for="email">
+            メールアドレス<span class="required">必須</span>
+          </label>
+          <input type="email" id="email" name="email" placeholder="例）info@018est.net" required>
+        </div>
+
+        <div class="form-row">
+          <label for="tel">
+            電話番号<span class="optional">任意</span>
+          </label>
+          <input type="tel" id="tel" name="tel" placeholder="例）022-797-4890">
+        </div>
+
+        <div class="form-row">
+          <label for="message">
+            お問い合わせ内容<span class="required">必須</span>
+          </label>
+          <textarea id="message" name="message" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn-submit">送　信</button>
+        </div>
+
+      </form>
+
+      <!-- サンクスメッセージ -->
+      <div id="thanks">
+        <h2>お問い合わせありがとうございました</h2>
+        <p>
+          内容を確認のうえ、担当者よりご連絡いたします。<br>
+          通常2〜3営業日以内にご返信いたします。<br>
+          しばらくお待ちください。
+        </p>
+        <a href="index.html" class="back-link">トップページへ戻る</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="ft-inner">
+      <a href="index.html" class="ft-logo">
+        <img src="img/logo.png" alt="令和エステート株式会社">
+      </a>
+      <div class="ft-badge">
+        <img src="img/real-partner.png" alt="REAL PARTNER ハトマーク">
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ハンバーガーメニュー
+    const ham = document.getElementById('ham');
+    const nav = document.getElementById('nav');
+    ham.addEventListener('click', function () {
+      const open = nav.classList.toggle('open');
+      ham.setAttribute('aria-expanded', open);
+    });
+    nav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        nav.classList.remove('open');
+        ham.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // フォーム送信（AJAX）
+    const form = document.getElementById('contact-form');
+    const thanks = document.getElementById('thanks');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn = form.querySelector('.btn-submit');
+      btn.disabled = true;
+      btn.textContent = '送信中…';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          thanks.style.display = 'block';
+        } else {
+          btn.disabled = false;
+          btn.textContent = '送　信';
+          alert('送信に失敗しました。お手数ですが、お電話にてご連絡ください。\nTEL: 022-797-4890');
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = '送　信';
+        alert('送信に失敗しました。お手数ですが、お電話にてご連絡ください。\nTEL: 022-797-4890');
+      }
+    });
+  </script>
+
+</body>
+</html>
